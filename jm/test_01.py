@@ -1,3 +1,4 @@
+
 #%%
 #-----------------------------------------------------------------------------------
 # load libraries and co
@@ -64,5 +65,5 @@ trace1 = go.Scatter(x = ts.index, y = ts.open)
 data = [trace1]
 layout = go.Layout()
 fig1 = go.Figure(data = data, layout = layout)
-plot(fig1, filename = 'cufflinks/fig1.html')
+plot(fig1, filename = 'jm/plots/fig1.html')
 #-----------------------------------------------------------------------------------
