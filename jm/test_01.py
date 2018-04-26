@@ -38,8 +38,9 @@ trades = client.get_recent_trades(symbol='BNBBTC')
 trades = client.get_historical_trades(symbol='BNBBTC')
 
 # fetch 30 minute klines for the last month of 2017
-klines = client.get_historical_klines('ETHBTC', Client.KLINE_INTERVAL_30MINUTE,
-                                      '1 Dec, 2017', '1 Jan, 2018')
+interval = Client.KLINE_INTERVAL_30MINUTE
+klines = client.get_historical_klines('ETHUSDT', interval,
+                                      '26 Apr, 2017', '26 Apr, 2018')
 # info about klines format:
 # https://python-binance.readthedocs.io/en/latest/binance.html#binance.client.Client.get_klines
 #-----------------------------------------------------------------------------------
@@ -54,7 +55,8 @@ ts.columns = ['open_time', 'open', 'high', 'low', 'close',
               'taker_buy_base_asset_vol', 'taker_buy_quote_asset_vol', 'ignore']
 ts['open_time'] = pd.to_datetime(ts['open_time'], unit='ms')
 ts = ts.set_index('open_time')
-#print(ts.head())
+print(ts.tail())
+#ts.info()
 #-----------------------------------------------------------------------------------
 
 #%%
@@ -66,4 +68,24 @@ data = [trace1]
 layout = go.Layout()
 fig1 = go.Figure(data = data, layout = layout)
 plot(fig1, filename = 'jm/plots/fig1.html')
+#-----------------------------------------------------------------------------------
+
+#%%
+#-----------------------------------------------------------------------------------
+# data manipulation
+#-----------------------------------------------------------------------------------
+# split into train and test sets
+# train set
+start_date = '2017-08-17 04:00:00'
+end_date = '2017-10-17 04:00:00'
+mask = (ts.index >= start_date) & (ts.index <= end_date)
+train_data = ts['close'].loc[mask]
+
+# test set
+start_date = '2018-03-26 00:00:00'
+end_date = '2018-04-26 00:00:00'
+mask = (ts.index >= start_date) & (ts.index <= end_date)
+test_data = ts['close'].loc[mask]
+
+print(test_data)
 #-----------------------------------------------------------------------------------
