@@ -40,7 +40,7 @@ trades = client.get_historical_trades(symbol='BNBBTC')
 # fetch 30 minute klines for the last month of 2017
 interval = Client.KLINE_INTERVAL_30MINUTE
 klines = client.get_historical_klines('ETHUSDT', interval,
-                                      '26 Apr, 2017', '26 Apr, 2018')
+                                      '26 Apr, 2017', '21 May, 2018')
 # info about klines format:
 # https://python-binance.readthedocs.io/en/latest/binance.html#binance.client.Client.get_klines
 #-----------------------------------------------------------------------------------
@@ -86,6 +86,55 @@ start_date = '2018-03-26 00:00:00'
 end_date = '2018-04-26 00:00:00'
 mask = (ts.index >= start_date) & (ts.index <= end_date)
 test_data = ts['close'].loc[mask]
+#-----------------------------------------------------------------------------------
 
-print(test_data)
+#%%
+#-----------------------------------------------------------------------------------
+# Prediction with TensorFlow
+#-----------------------------------------------------------------------------------
+import tensorflow as tf
+from sklearn.preprocessing import MinMaxScaler
+
+# split into train and test sets
+# train set
+
+start_date = '2017-08-17 04:00:00'
+end_date = '2018-02-17 04:00:00'
+mask = (ts.index >= start_date) & (ts.index <= end_date)
+data_train = ts.loc[mask]
+
+# test set
+start_date = '2018-03-26 00:00:00'
+end_date = '2018-05-20 00:00:00'
+mask = (ts.index >= start_date) & (ts.index <= end_date)
+data_test = ts.loc[mask]
+
+trace1 = go.Scatter(x = data_train.index, y = data_train['close'], name='train data')
+trace2 = go.Scatter(x = data_test.index, y = data_test['close'], name='test data')
+data = [trace1, trace2]
+layout = go.Layout()
+fig1 = go.Figure(data = data, layout = layout)
+plot(fig1, filename = 'jm/plots/fig1.html')
+
+#%%
+
+#print(data_test['close'].values.astype(float))
+
+# Scale data
+scaler = MinMaxScaler()
+
+test = scaler.fit_transform(data_test[['close', 'open']].values.astype(float))
+print(test)
+#print('Min: %f, Max: %f' % (scaler.data_min_, scaler.data_max_))
+
+#data_test = scaler.transform(data_train['close'].values)
+# data_test = scaler.transform(data_test)
+
+# trace1 = go.Scatter(x = data_train.index, y = data_train, name='train data')
+# trace2 = go.Scatter(x = data_test.index, y = data_test, name='test data')
+# data = [trace1, trace2]
+# layout = go.Layout()
+# fig1 = go.Figure(data = data, layout = layout)
+# plot(fig1, filename = 'jm/plots/fig2.html')
+
 #-----------------------------------------------------------------------------------
