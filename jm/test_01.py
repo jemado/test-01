@@ -10,6 +10,7 @@ import numpy as np
 from binance.client import Client
 #from external_functions import date_to_milliseconds, interval_to_milliseconds
 # test comment: funktioniert push auf github?
+# test comment: neuen Branch kreieren?
 import plotly.graph_objs as go
 from plotly.offline import init_notebook_mode, plot
 import cufflinks as cf
