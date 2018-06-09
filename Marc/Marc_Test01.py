@@ -82,10 +82,112 @@ print(ts_BTC.tail())
 #-----------------------------------------------------------------------------------
 trace1 = go.Scatter(x = ts_ETH.index, y = ts_ETH.open)
 data = [trace1]
+print(data)
 layout = go.Layout()
 fig1 = go.Figure(data = data, layout = layout)
-plot(fig1, filename = 'jm/plots/fig1.html')
+plot(fig1, filename = 'Marc/plots/fig1.html')
 #-----------------------------------------------------------------------------------
+
+#%%
+#print(ts_ETH.index)
+#print(ts_ETH.open)
+import pandas_datareader.data as web
+import datetime as dt
+import matplotlib.pyplot as plt
+from matplotlib import style
+style.use('ggplot')
+#%%
+# Monte Carlo Simulation
+prices=ts_ETH.open
+#print(prices)
+#returns=prices.pct_change()
+for i in range(interval=1,len(prices)):
+    returns = prices[i]-prices[i-interval]
+print(returns)
+#%%
+
+start = dt.datetime(2017, 4, 26)
+end = dt.datetime(2018, 5, 21)
+print(start)
+print(end)
+f = web.DataReader('F', 'morningstar', start, end)['Close']
+#print(f)
+returns = f.pct_change()
+print(returns)
+last_price = f[-1]
+num_simulations = 1000
+num_days = 252
+simulation_df = pd.DataFrame()
+for x in range(num_simulations):
+    count = 0
+    daily_vol = returns.std()
+    
+    price_series = []
+    
+    price = last_price * (1 + np.random.normal(0, daily_vol))
+    price_series.append(price)
+    for y in range(num_days):
+        if count == 251:
+            break
+        price = price_series[count] * (1 + np.random.normal(0, daily_vol))
+        price_series.append(price)
+        count += 1
+    
+    simulation_df[x] = price_series
+
+#%%
+#print(simulation_df)
+print(ts_ETH.index)
+#trace1 = go.Scatter(x = ts_ETH.index, y = ts_ETH.open)
+#data = [trace1]
+
+#%%    
+#fig = plt.figure()
+#fig.suptitle('Monte Carlo Simulation: AAPL')
+layout = go.Layout()
+fig2 = go.Figure(data = simulation_df, layout = layout)
+#%%
+fig2 = go.Figure(data = simulation_df, layout = layout)
+plot(fig2, filename = 'Marc/plots/fig2.html')
+#plt.plot(simulation_df)
+#plt.axhline(y = last_price, color = 'r', linestyle = '-')
+#plt.xlabel('Day')
+#plt.ylabel('Price')
+#plt.show()
+
+#%%
+#prices = web.DataReader('AAPL', 'google', start, end)['Close']
+#returns = prices.pct_change()
+#last_price = prices[-1]
+#Number of Simulations
+num_simulations = 1000
+num_days = 252
+simulation_df = pd.DataFrame()
+for x in range(num_simulations):
+    count = 0
+    daily_vol = returns.std()
+    
+    price_series = []
+    
+    price = last_price * (1 + np.random.normal(0, daily_vol))
+    price_series.append(price)
+    
+    for y in range(num_days):
+        if count == 251:
+            break
+        price = price_series[count] * (1 + np.random.normal(0, daily_vol))
+        price_series.append(price)
+        count += 1
+    
+    simulation_df[x] = price_series
+    
+fig = plt.figure()
+fig.suptitle('Monte Carlo Simulation: AAPL')
+plt.plot(simulation_df)
+plt.axhline(y = last_price, color = 'r', linestyle = '-')
+plt.xlabel('Day')
+plt.ylabel('Price')
+plt.show()
 
 #%%
 #-----------------------------------------------------------------------------------
@@ -139,7 +241,7 @@ trace2 = go.Scatter(x = data_test.index, y = data_test['BTC'], name='test data')
 data = [trace1, trace2]
 layout = go.Layout()
 fig1 = go.Figure(data = data, layout = layout)
-plot(fig1, filename = 'jm/plots/fig1.html')
+plot(fig1, filename = 'Marc/plots/fig1.html')
 
 #%%
 # check if there is a nan entry
@@ -166,6 +268,7 @@ n_neurons_2 = 512
 n_neurons_3 = 256
 n_neurons_4 = 128
 
+
 # Session
 net = tf.InteractiveSession()
 
@@ -184,21 +287,3 @@ weight_initializer = tf.contrib.layers.variance_scaling_initializer(
     seed=None,
     dtype=tf.float32
 )
-#bias_initializer = tf.zeros_initializer()
-
-#print(data_train_trans[:, 1:])
-#print(data_train_trans[:, 0])
-#print(data_train_trans)
-#print('Min: %f, Max: %f' % (scaler.data_min_, scaler.data_max_))
-
-#data_test = scaler.transform(data_train['close'].values)
-# data_test = scaler.transform(data_test)
-
-# trace1 = go.Scatter(x = data_train.index, y = data_train, name='train data')
-# trace2 = go.Scatter(x = data_test.index, y = data_test, name='test data')
-# data = [trace1, trace2]
-# layout = go.Layout()
-# fig1 = go.Figure(data = data, layout = layout)
-# plot(fig1, filename = 'jm/plots/fig2.html')
-
-#-----------------------------------------------------------------------------------
