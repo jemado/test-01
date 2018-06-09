@@ -4,7 +4,11 @@
 
 # Marc hol mol Bier -> MAAAAARRRRC!!!!
 # Whhhaaattt??
+<<<<<<< HEAD
 # StS
+=======
+# JM
+>>>>>>> 80aa6648dfa476a2fa99f07ec14661b4cbac3d19
 
 #%%
 # TEEEEEEEEEEEEEEEST
