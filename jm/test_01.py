@@ -9,9 +9,13 @@ import pandas as pd
 import numpy as np
 from binance.client import Client
 #from external_functions import date_to_milliseconds, interval_to_milliseconds
+<<<<<<< HEAD
 # test comment
 # Test Change Marc
 # lkj lkaj sdf
+=======
+# test comment: funktioniert push auf github?
+>>>>>>> c0ac1edd3890a36202add822547cd2019c484453
 import plotly.graph_objs as go
 from plotly.offline import init_notebook_mode, plot
 import cufflinks as cf
