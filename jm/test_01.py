@@ -7,6 +7,7 @@
 
 
 #%%
+# TEEEEEEEEEEEEEEEST
 #-----------------------------------------------------------------------------------
 # load libraries and co
 #-----------------------------------------------------------------------------------
@@ -22,7 +23,11 @@ from binance.client import Client
 # lkj lkaj sdf
 =======
 # test comment: funktioniert push auf github?
+<<<<<<< HEAD
 >>>>>>> c0ac1edd3890a36202add822547cd2019c484453
+=======
+# test comment: neuen Branch kreieren?
+>>>>>>> ac25ed3dfadcadec5590000b7f0760d5e1dca41c
 import plotly.graph_objs as go
 from plotly.offline import init_notebook_mode, plot
 import cufflinks as cf
