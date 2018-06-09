@@ -10,6 +10,8 @@ import numpy as np
 from binance.client import Client
 #from external_functions import date_to_milliseconds, interval_to_milliseconds
 # test comment
+# Test Change Marc
+# lkj lkaj sdf
 import plotly.graph_objs as go
 from plotly.offline import init_notebook_mode, plot
 import cufflinks as cf
@@ -21,8 +23,9 @@ import dask
 # required for plotting
 init_notebook_mode(connected=True)
 cf.go_offline()
-#-----------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------
+# Testzeile Marc
 #%%
 #-----------------------------------------------------------------------------------
 # connect to Binance and get data
@@ -34,6 +37,9 @@ client = Client(api_key, api_secret)
 
 # get market depth
 depth = client.get_order_book(symbol='BNBBTC')
+
+# get all symbol prices
+prices = client.get_all_tickers()
 
 # Get Recent Trades
 trades = client.get_recent_trades(symbol='BNBBTC')
@@ -48,6 +54,7 @@ klines_ETH = client.get_historical_klines('ETHUSDT', interval,
 klines_BTC = client.get_historical_klines('BTCUSDT', interval,
                                       '26 Apr, 2017', '21 May, 2018')
 # info about klines format:
+
 # https://python-binance.readthedocs.io/en/latest/binance.html#binance.client.Client.get_klines
 #-----------------------------------------------------------------------------------
 
@@ -71,6 +78,8 @@ ts_BTC = ts_BTC.set_index('open_time')
 
 print(ts_BTC.tail())
 #ts.info()
+
+
 #-----------------------------------------------------------------------------------
 
 #%%
@@ -81,7 +90,7 @@ trace1 = go.Scatter(x = ts_ETH.index, y = ts_ETH.open)
 data = [trace1]
 layout = go.Layout()
 fig1 = go.Figure(data = data, layout = layout)
-plot(fig1, filename = 'jm/plots/fig1.html')
+plot(fig1, filename = 'plots/fig1.html')
 #-----------------------------------------------------------------------------------
 
 #%%
@@ -136,7 +145,7 @@ trace2 = go.Scatter(x = data_test.index, y = data_test['BTC'], name='test data')
 data = [trace1, trace2]
 layout = go.Layout()
 fig1 = go.Figure(data = data, layout = layout)
-plot(fig1, filename = 'jm/plots/fig1.html')
+plot(fig1, filename = 'plots/fig1.html')
 
 #%%
 # check if there is a nan entry
