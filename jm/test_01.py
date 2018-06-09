@@ -4,13 +4,10 @@
 
 # Marc hol mol Bier -> MAAAAARRRRC!!!!
 # Whhhaaattt??
-<<<<<<< HEAD
 # Hier fehlen 2 Zeilen
 
-=======
 # StS
 # JM
->>>>>>> 726f42512ec9b3503b07d09d55316b769735b388
 
 #%%
 # TEEEEEEEEEEEEEEEST
